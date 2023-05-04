@@ -144,7 +144,7 @@ const Team: React.FC = props => {
             </div>
 
             {/* Team Info */}
-            {selectedMenuItem === "Team Information" ? 
+            {selectedMenuItem === "Team Information" && teamInfo ? 
             <TeamInfo 
                 teamInfo={teamInfo}/>
             : null}

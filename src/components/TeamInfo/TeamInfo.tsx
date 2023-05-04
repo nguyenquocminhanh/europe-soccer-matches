@@ -31,7 +31,7 @@ const TeamInfo: React.FC<TeamInfoProps> = props => {
                 {/* Logo */}
                 <img src={props.teamInfo?.crest} alt={props.teamInfo?.name} className={classes.Logo}/>
                 {/* Team Name */}
-                <h2>{props.teamInfo?.name + ' (' + props.teamInfo?.shortName + ')'}</h2>
+                <h2>{(props.teamInfo?.name ? props.teamInfo?.name : 'Loading...') + ' (' + ( props.teamInfo?.shortName ? props.teamInfo?.shortName : 'Loading...') + ')'}</h2>
                 {/* Stadium */}
                 <p><b>Stadium:</b> {props.teamInfo?.stadium}</p>
                 {/* Address */}
@@ -46,7 +46,7 @@ const TeamInfo: React.FC<TeamInfoProps> = props => {
                 <p><b>Coach:</b> {(props.teamInfo?.coachName ? props.teamInfo?.coachName : 'Unknown') + (props.teamInfo?.coachContractStart ? (' (' + replaceDash(props.teamInfo?.coachContractStart) + ' - ' + replaceDash(props.teamInfo?.coachContractEnd) + ')') : '')}</p>
                 <p><b>Coach Nationality:</b> {props.teamInfo?.coachNationality}</p>
                 {/* Last Updated */}
-                <p><b>Last Updated:</b> {convertTime(props.teamInfo?.lastUpdated).date}</p>
+                <p><b>Last Updated:</b> {props.teamInfo?.lastUpdated ? convertTime(props.teamInfo?.lastUpdated).date : 'Loading...'}</p>
             </div>
 
             <div className={classes.TableContainer}>
