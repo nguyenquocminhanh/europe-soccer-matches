@@ -15,7 +15,7 @@
     margin: 2rem 0;
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
 }
   
 .TeamContainer {
@@ -43,7 +43,8 @@
 
 .Stage {
     margin-top: 0.5rem;
-    color: #70757a
+    color: #70757a;
+    text-align: center;
 }
 
 hr {
@@ -54,10 +55,16 @@ hr {
 .League {
     color: #007bff;
     cursor: pointer;
+    text-align: center;
 }
 .TeamName:hover,
 .League:hover {
     text-decoration: underline;
+}
+
+.TeamContainer,
+.GameDetails {
+    width: 33.33%;
 }
   
 @media screen and (max-width: 768px) {
