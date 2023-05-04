@@ -1,0 +1,65 @@
+.Bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    height: 50px;
+    background-color: #f5f5f5;
+    padding: 5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.barItem {
+    flex: 1;
+    height: 100%;
+    background-color: gray;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    margin: 0 1px;
+}
+
+.barItem:hover {
+    background-color: black !important;
+}
+
+@media (max-width: 600px) {
+    .Bar {
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      height: auto;
+      z-index: 0;
+    }
+  
+    .barItem {
+      margin: 5px 0;
+      width: 100%;
+    }
+}
+
+
+.ResultPage {
+    /* background-color: #f2f2f2; */
+    min-height: 100vh;
+}
+
+.Form {
+    /* background-color: #fff; */
+    /* padding: 1rem; */
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+@media screen and (max-width: 768px) {
+    .ResultPage {
+      flex-direction: column;
+      align-items: center;
+    }
+}

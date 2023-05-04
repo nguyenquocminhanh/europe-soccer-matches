@@ -1,0 +1,75 @@
+.ResultPage {
+    background-color: #f2f2f2;
+    min-height: 100vh;
+}
+
+.Form {
+   
+    background-color: #fff;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.StatsContainer {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+  
+.TeamContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+.TeamLogo {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 0.5rem;
+}
+  
+.GameDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Score {
+    font-size: 2rem;
+}
+
+.Stage {
+    margin-top: 0.5rem;
+    color: #70757a
+}
+
+hr {
+    border-top: 1px solid #70757a;
+}
+
+.TeamName,
+.League {
+    color: #007bff;
+    cursor: pointer;
+}
+.TeamName:hover,
+.League:hover {
+    text-decoration: underline;
+}
+  
+@media screen and (max-width: 768px) {
+    .ResultPage {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .TeamLogo {
+      width: 3rem;
+      height: 3rem;
+      margin-right: 0.5rem;
+    }
+}
+  

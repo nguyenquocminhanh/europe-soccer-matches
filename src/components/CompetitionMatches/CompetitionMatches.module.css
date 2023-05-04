@@ -1,0 +1,83 @@
+.TeamMatchesContainer {
+    margin-top: 70px;
+    position: relative;
+    padding-top: 20px;
+}
+
+  .TeamName {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .TeamName h2 {
+    margin: 0.5rem 0;
+  }
+  
+  .TableContainer {
+    overflow-x: auto;
+  }
+  
+  .Table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 1400px;
+      margin: auto;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      color: #333;
+  }
+  
+  .Table th,
+  .Table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    height: 50px;
+  }
+  
+  td img {
+      max-height: 50px;
+      margin-right: 5px;
+  }
+  
+  .Table th {
+    background-color: #f2f2f2;
+  }
+  
+  .Table tr {
+    cursor: pointer;
+  }
+  
+  .Table tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  .TableDataTeam {
+    display: flex;
+    align-items: center;
+  }
+  
+  .RedArrow {
+    margin-left: 5px;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid #000;
+  }
+  .Badge {
+      display: inline-block;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+      border-radius: 50px;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .TeamMatchesContainer {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }

@@ -1,0 +1,92 @@
+.TeamInfoContainer {
+    margin-top: 70px;
+    padding-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.InfoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.Website:visited {
+    color: #007bff;
+}
+
+p {
+    margin: 0.5rem 0;
+}
+
+.Logo {
+    max-height: 250px;
+}
+
+/* Players Table */
+
+.TableContainer {
+    overflow-x: auto;
+    width: 50%;
+}
+  
+.Table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.Table th,
+.Table td {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    height: 50px;
+}
+
+td img {
+    max-height: 50px;
+    margin-right: 5px;
+}
+
+.Table th {
+    background-color: #f2f2f2;
+}
+
+.Table tr {
+    cursor: pointer;
+}
+
+.Table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.TableDataTeam {
+    display: flex;
+    align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+    h2 {
+        font-size: 20px;
+        margin-bottom: 0.5rem;
+    }
+    .TeamInfoContainer {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    .InfoContainer {
+        width: 100%;
+    }
+
+    .TableContainer {
+        margin-top: 1rem;
+        width: 100%;
+    }
+}
