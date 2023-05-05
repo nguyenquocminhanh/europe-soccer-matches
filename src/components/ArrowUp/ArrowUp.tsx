@@ -7,9 +7,12 @@ interface ArrowUpProps {
 
 const ArrowUp: React.FC<ArrowUpProps> = props => {
     return (
-        <button className={classes.ArrowUp} onClick={props.onClickHandler}>
+        <div className={classes.ButtonWrapper}>
+            <p>View More</p>
+            <button className={classes.ArrowUp} onClick={props.onClickHandler}>
             
-        </button>
+            </button>
+        </div>
     )   
 }
 
