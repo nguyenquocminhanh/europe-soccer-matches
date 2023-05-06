@@ -118,9 +118,9 @@ const Match: React.FC = props => {
                     <hr></hr>
 
                     <div className={classes.Competition}>
-                        <div>Referee: {match?.referee}</div>
+                        <div><b>Referee:</b> {match?.referee}</div>
                         &nbsp; &nbsp; 
-                        <div>Stadium: {match?.stadium}</div>
+                        <div><b>Stadium:</b> {match?.stadium}</div>
                     </div>   
                 </div>
                 }
