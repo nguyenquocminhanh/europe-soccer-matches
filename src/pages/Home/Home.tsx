@@ -24,49 +24,50 @@ export interface Match {
 const Home: React.FC = () => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [isButtonHidden, setButtonHidden] = useState<boolean>(true);
-  const [leagueCode, setLeagueCode] = useState<string | null>(null);
+  const [leagueCode, setLeagueCode] = useState<string | null>('PL');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    onSelectLeagueHandler('PL', false);
-  }, [])
+    onSelectLeagueHandler(leagueCode, false);
 
-  const onSelectLeagueHandler = (leagueCode: string | null, showAllMatch: boolean) => {
+    const interval = setInterval(() => {
+      onSelectLeagueHandler(leagueCode, false);
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [leagueCode])
+
+  const onSelectLeagueHandler = async (leagueCode: string | null, showAllMatch: boolean) => {
     setIsLoading(true);
     // clear Match
     setMatches([]);
     setButtonHidden(true);
     setLeagueCode(leagueCode);
 
-    axios.get(`${process.env.REACT_APP_SERVER_URL}/all-match?leagueCode=${leagueCode}&showAllMatch=${showAllMatch}`)
-    .then(response => {
-      response.data.matches.forEach((item: { id: number; utcDate: string; competition: { name: string; }; status: string; stage: string; homeTeam: { name: string; id: number; crest: string; }; awayTeam: { name: string; id: number; crest: string; }; score: { fullTime: { home: number; away: number; }; winner: "HOME_TEAM" | "DRAW" | "AWAY_TEAM" | null }; }) => {
-        const match: Match = {
-          id: item.id,
-          date: item.utcDate,
-          competition: item.competition.name,
-          status: item.status,
-          stage: item.stage,
-          homeTeam: item.homeTeam.name,
-          homeTeamId: item.homeTeam.id,
-          homeTeamCrest: item.homeTeam.crest,    // logo
-          awayTeam: item.awayTeam.name,
-          awayTeamId: item.awayTeam.id,
-          awayTeamCrest: item.awayTeam.crest,
-          homeScore: item.score.fullTime.home,
-          awayScore: item.score.fullTime.away,
-          winner: item.score.winner
-        }
-        setMatches(prevMatches => [...prevMatches, match]);
-      })
-      setIsLoading(false);
-      setButtonHidden(showAllMatch ? true: false);
+    const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/all-match?leagueCode=${leagueCode}&showAllMatch=${showAllMatch}`);
+
+    result.data.matches.forEach((item: { id: number; utcDate: string; competition: { name: string; }; status: string; stage: string; homeTeam: { name: string; id: number; crest: string; }; awayTeam: { name: string; id: number; crest: string; }; score: { fullTime: { home: number; away: number; }; winner: "HOME_TEAM" | "DRAW" | "AWAY_TEAM" | null }; }) => {
+      const match: Match = {
+        id: item.id,
+        date: item.utcDate,
+        competition: item.competition.name,
+        status: item.status,
+        stage: item.stage,
+        homeTeam: item.homeTeam.name,
+        homeTeamId: item.homeTeam.id,
+        homeTeamCrest: item.homeTeam.crest,    // logo
+        awayTeam: item.awayTeam.name,
+        awayTeamId: item.awayTeam.id,
+        awayTeamCrest: item.awayTeam.crest,
+        homeScore: item.score.fullTime.home,
+        awayScore: item.score.fullTime.away,
+        winner: item.score.winner
+      }
+      setMatches(prevMatches => [...prevMatches, match]);
     })
-    .catch(err => {
-      setIsLoading(false)
-      console.log(err);
-    })
+    setIsLoading(false);
+    setButtonHidden(showAllMatch ? true: false);
   }
 
   const onMatchClickHandler = (matchId: number) => {
