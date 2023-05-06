@@ -34,7 +34,7 @@ const Home: React.FC = () => {
 
     const interval = setInterval(() => {
       onSelectLeagueHandler(prevLeagueCodeRef.current, false);
-    }, 30000);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [])
