@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import HorizontalBar from "../../components/HorizontalBar/HorizontalBar";
 import ScoreTable from "../../components/ScoreTable/ScoreTable";
@@ -24,26 +24,29 @@ export interface Match {
 const Home: React.FC = () => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [isButtonHidden, setButtonHidden] = useState<boolean>(true);
-  const [leagueCode, setLeagueCode] = useState<string | null>('PL');
+  const [leagueCode, setLeagueCode] = useState<string>('PL');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const prevLeagueCodeRef = useRef('PL');
 
   useEffect(() => {
-    onSelectLeagueHandler(leagueCode, false);
+    onSelectLeagueHandler(prevLeagueCodeRef.current, false);
 
     const interval = setInterval(() => {
-      onSelectLeagueHandler(leagueCode, false);
+      onSelectLeagueHandler(prevLeagueCodeRef.current, false);
     }, 30000);
 
     return () => clearInterval(interval);
-  }, [leagueCode])
+  }, [])
 
-  const onSelectLeagueHandler = async (leagueCode: string | null, showAllMatch: boolean) => {
+  const onSelectLeagueHandler = async (leagueCode: string, showAllMatch: boolean) => {
     setIsLoading(true);
     // clear Match
     setMatches([]);
     setButtonHidden(true);
     setLeagueCode(leagueCode);
+    // set value of pervLeagueCodeRef for re-render page without change leaguecode
+    prevLeagueCodeRef.current = leagueCode;
 
     const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/all-match?leagueCode=${leagueCode}&showAllMatch=${showAllMatch}`);
 
@@ -76,7 +79,9 @@ const Home: React.FC = () => {
 
   return (
     <Fragment>
-        <HorizontalBar onSelectLeague={onSelectLeagueHandler}/>
+        <HorizontalBar 
+          onSelectLeague={onSelectLeagueHandler}
+          leagueCode={leagueCode!}/>
 
         <ScoreTable matches={matches}
             isButtonHidden={isButtonHidden} 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import classes from './HorizontalBar.module.css';
 
 interface Competition  {
@@ -36,13 +36,12 @@ const competitions: Competition[] = [
 
 interface HorizontalBarProps {
     onSelectLeague: (league: string, showAllMatch: boolean) => void;
+    leagueCode: string
 }
 
 const HorizontalBar: React.FC<HorizontalBarProps> = props => {
-    const [selectedLeague, setLeague] = useState<string | null>('PL');
 
     const clickHandler = (leagueCode: string) => {
-        setLeague(leagueCode);
         props.onSelectLeague(leagueCode, false);
     }
 
@@ -50,7 +49,7 @@ const HorizontalBar: React.FC<HorizontalBarProps> = props => {
         return <div 
             key={item.code} 
             className={classes.barItem}
-            style={{backgroundColor: item.code === selectedLeague ? 'black' : 'gray'}}
+            style={{backgroundColor: item.code === props.leagueCode ? 'black' : 'gray'}}
             onClick={() => clickHandler(item.code)}>
                 {item.name}
         </div>
