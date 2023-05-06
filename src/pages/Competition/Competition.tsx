@@ -53,17 +53,17 @@ const Competition: React.FC = props => {
             // get competition matches
             axios.get(`${process.env.REACT_APP_SERVER_URL}/all-match?leagueCode=${leagueCode}&showAllMatch=true`)
             .then(response => {
-                response.data.matches.forEach((item: { id: number; utcDate: string; competition: { name: string; }; status: string; stage: string; homeTeam: { name: string; id: number; crest: string; }; awayTeam: { name: string; id: number; crest: string; }; score: { fullTime: { home: number; away: number; }; winner: "HOME_TEAM" | "DRAW" | "AWAY_TEAM" | null }; }) => {
+                response.data.matches.forEach((item: { id: number; utcDate: string; competition: { name: string; }; status: string; stage: string; homeTeam: { shortName: string; id: number; crest: string; }; awayTeam: { shortName: string; id: number; crest: string; }; score: { fullTime: { home: number; away: number; }; winner: "HOME_TEAM" | "DRAW" | "AWAY_TEAM" | null }; }) => {
                     const match: Match = {
                         id: item.id,
                         date: item.utcDate,
                         competition: item.competition.name,
                         status: item.status,
                         stage: item.stage,
-                        homeTeam: item.homeTeam.name,
+                        homeTeam: item.homeTeam.shortName,
                         homeTeamId: item.homeTeam.id,
                         homeTeamCrest: item.homeTeam.crest,    // logo
-                        awayTeam: item.awayTeam.name,
+                        awayTeam: item.awayTeam.shortName,
                         awayTeamId: item.awayTeam.id,
                         awayTeamCrest: item.awayTeam.crest,
                         homeScore: item.score.fullTime.home,

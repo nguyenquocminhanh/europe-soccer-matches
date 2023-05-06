@@ -50,17 +50,17 @@ const Home: React.FC = () => {
 
     const result = await axios.get(`${process.env.REACT_APP_SERVER_URL}/all-match?leagueCode=${leagueCode}&showAllMatch=${showAllMatch}`);
 
-    result.data.matches.forEach((item: { id: number; utcDate: string; competition: { name: string; }; status: string; stage: string; homeTeam: { name: string; id: number; crest: string; }; awayTeam: { name: string; id: number; crest: string; }; score: { fullTime: { home: number; away: number; }; winner: "HOME_TEAM" | "DRAW" | "AWAY_TEAM" | null }; }) => {
+    result.data.matches.forEach((item: { id: number; utcDate: string; competition: { name: string; }; status: string; stage: string; homeTeam: { shortName: string; id: number; crest: string; }; awayTeam: { shortName: string; id: number; crest: string; }; score: { fullTime: { home: number; away: number; }; winner: "HOME_TEAM" | "DRAW" | "AWAY_TEAM" | null }; }) => {
       const match: Match = {
         id: item.id,
         date: item.utcDate,
         competition: item.competition.name,
         status: item.status,
         stage: item.stage,
-        homeTeam: item.homeTeam.name,
+        homeTeam: item.homeTeam.shortName,
         homeTeamId: item.homeTeam.id,
         homeTeamCrest: item.homeTeam.crest,    // logo
-        awayTeam: item.awayTeam.name,
+        awayTeam: item.awayTeam.shortName,
         awayTeamId: item.awayTeam.id,
         awayTeamCrest: item.awayTeam.crest,
         homeScore: item.score.fullTime.home,

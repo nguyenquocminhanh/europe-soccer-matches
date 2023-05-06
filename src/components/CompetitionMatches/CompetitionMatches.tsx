@@ -49,7 +49,7 @@ const CompetitionMatches: React.FC<CompetitionMatchesProps> = props => {
     })
     return (<div className={classes.TeamMatchesContainer}>
         <div className={classes.TeamName}>
-            <h2>{props.competitionName}'s Matches</h2>
+            <h2>{props.competitionName === "Primera Division" ? "LaLiga" : props.competitionName}'s Matches</h2>
         </div>
 
         <div className={classes.TableContainer}>
