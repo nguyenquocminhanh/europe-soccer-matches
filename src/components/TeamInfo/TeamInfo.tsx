@@ -4,9 +4,11 @@ import classes from './TeamInfo.module.css';
 import { replaceDash } from "../../utils/replace/replace/replace-";
 import { convertTime } from "../../utils/convertTime";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../ui/Spinner";
 
 interface TeamInfoProps {
     teamInfo: SingleTeam | null;
+    isLoading: boolean
 }
 
 const TeamInfo: React.FC<TeamInfoProps> = props => {
@@ -27,6 +29,8 @@ const TeamInfo: React.FC<TeamInfoProps> = props => {
 
     return (
         <div className={classes.TeamInfoContainer}>
+            { props.isLoading ? <Spinner/> :
+            <>
             <div className={classes.InfoContainer}>
                 {/* Logo */}
                 <img src={props.teamInfo?.crest} alt={props.teamInfo?.name} className={classes.Logo}/>
@@ -65,6 +69,8 @@ const TeamInfo: React.FC<TeamInfoProps> = props => {
                     </tbody>
                 </table>
             </div>
+            </>
+            }
         </div>
     )
 }

@@ -43,9 +43,11 @@ const Player: React.FC = props => {
     const [playerInfo, setPlayerInfo] = useState<Player>();
     const [playerMatches, setPlayerMatches] = useState<Match[]>([]);
     const [selectedMenuItem, setMenu] = useState<'Player Information' | 'Player Matches'>('Player Information');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
     
-    useEffect(() => {              
+    useEffect(() => {         
+        setIsLoading(true);
         // get Player Matches
         axios.get(`${process.env.REACT_APP_SERVER_URL}/one-player-matches?playerId=${playerId}`)
         .then(response => {
@@ -105,13 +107,16 @@ const Player: React.FC = props => {
                 };
                 
                 setPlayerInfo(player);
+                setIsLoading(false);
             })
             .catch(error => {
                 console.log(error);
+                setIsLoading(false);
             });
         })
         .catch(error => {
             console.log(error);
+            setIsLoading(false);
         });
     }, [playerId])
 
@@ -137,9 +142,10 @@ const Player: React.FC = props => {
             </div>
 
             {/* Player Info */}
-            {selectedMenuItem === "Player Information" && playerInfo? 
+            {selectedMenuItem === "Player Information" ? 
             <PlayerInfo 
-                playerInfo={playerInfo}
+                isLoading={isLoading}
+                playerInfo={playerInfo!}
                 matches={playerMatches}
                 matchClickHandler={onMatchClickHandler}/>
             : null}

@@ -54,9 +54,11 @@ const Team: React.FC = props => {
     const [teamMatches, setTeamMatches] = useState<Match[]>([]);
     const [matchStats, setMatchStats] = useState<MatchesStats>();
     const [selectedMenuItem, setMenu] = useState<'Team Information' | 'Team Matches'>('Team Information');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
     
     useEffect(() => {   
+        setIsLoading(true);
         // get Team Info
         axios.get(`${process.env.REACT_APP_SERVER_URL}/one-team-info?teamId=${teamId}`)
         .then(response => {
@@ -80,9 +82,11 @@ const Team: React.FC = props => {
                 lastUpdated: data.lastUpdated
             }
             setTeamInfo(singleTeam);
+            setIsLoading(false);
         })
         .catch(error => {
             console.log(error);
+            setIsLoading(false);
         });
            
         // get Team Matches
@@ -144,8 +148,9 @@ const Team: React.FC = props => {
             </div>
 
             {/* Team Info */}
-            {selectedMenuItem === "Team Information" && teamInfo ? 
+            {selectedMenuItem === "Team Information" ? 
             <TeamInfo 
+                isLoading={isLoading}
                 teamInfo={teamInfo}/>
             : null}
 

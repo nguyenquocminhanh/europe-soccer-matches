@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import classes from './Match.module.css';
 import { useParams } from 'react-router-dom';
 import axios from "axios";
 import { convertTime } from "../../utils/convertTime";
 import { replaceUnderscrore } from "../../utils/replace_";
 import { useNavigate } from 'react-router-dom';
+import Spinner from "../../ui/Spinner";
 
 interface SingleMatch {
     id: number,
@@ -27,9 +28,11 @@ interface SingleMatch {
 const Match: React.FC = props => {
     const { matchId } = useParams();
     const [match, setMatch] = useState<SingleMatch | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const navigate = useNavigate();
     
     useEffect(() => {
+        setIsLoading(true);
         axios.get(`${process.env.REACT_APP_SERVER_URL}/one-match?matchId=${matchId}`)
         .then(response => {
             const data = response.data;
@@ -53,9 +56,11 @@ const Match: React.FC = props => {
             }
 
             setMatch(singleMatch);
+            setIsLoading(false);
         })
         .catch(error => {
             console.log(error);
+            setIsLoading(false);
         })
     }, [matchId]);
 
@@ -68,46 +73,59 @@ const Match: React.FC = props => {
     }
 
     return (
-        <div className={classes.ResultPage}>
-            <div className={classes.Form}> 
-                {/* Competition */}
-                <div className={classes.Competition}>
-                    <span className={classes.League} onClick={() => {competitionClickHandler(match?.competitionId)}}>{match?.competition === 'Primera Division' ? 'LaLiga' : match?.competition}</span>
-                    &nbsp; &nbsp;
-                    {match?.date ? <span>{convertTime(match?.date).date}, {convertTime(match?.date).time}</span> : null}
-                </div>    
-
-                <div className={classes.StatsContainer}>    
-                    {/* Home Team */}
-                    <div className={classes.TeamContainer}>  
-                        <img src={match?.homeTeamCrest} alt={match?.homeTeam} className={classes.TeamLogo} />
-                     
-                        <div className={classes.TeamName} onClick={() => teamClickHandler(match?.homeTeamId)}>{match?.homeTeam}</div>
-                    </div>
-
-                    {/* Score & Stage */}
-                    <div className={classes.GameDetails}>
-                        <div className={classes.Score}>{match?.homeScore !== null && match?.homeScore !== undefined ? (match?.homeScore + "  -  " + match?.awayScore) : 'vs'}</div>
-                        <div className={classes.Stage}>{match?.stage ? replaceUnderscrore(match?.stage) : null}</div>
-                    </div>
-
-                    {/* Away Team */}
-                    <div className={classes.TeamContainer}>  
-                        <img src={match?.awayTeamCrest} alt={match?.awayTeam} className={classes.TeamLogo} />
-                      
-                        <div className={classes.TeamName} onClick={() => teamClickHandler(match?.awayTeamId)}>{match?.awayTeam}</div>
-                    </div>
-                </div> 
-
-                <hr></hr>
-
-                <div className={classes.Competition}>
-                    <div>Referee: {match?.referee}</div>
-                    &nbsp; &nbsp; 
-                    <div>Stadium: {match?.stadium}</div>
-                </div>   
+        <Fragment>
+            {/* Menu Bar */}
+            <div className={classes.Bar}>
+                <div 
+                    className={classes.barItem}
+                    onClick={() => navigate(-1)}>
+                        Return
+                </div>
             </div>
-        </div>
+      
+            <div className={classes.ResultPage}>
+                {isLoading ? <Spinner/> :
+                <div className={classes.Form}> 
+                    {/* Competition */}
+                    <div className={classes.Competition}>
+                        <span className={classes.League} onClick={() => {competitionClickHandler(match?.competitionId)}}>{match?.competition === 'Primera Division' ? 'LaLiga' : match?.competition}</span>
+                        &nbsp; &nbsp;
+                        {match?.date ? <span>{convertTime(match?.date).date}, {convertTime(match?.date).time}</span> : null}
+                    </div>    
+
+                    <div className={classes.StatsContainer}>    
+                        {/* Home Team */}
+                        <div className={classes.TeamContainer}>  
+                            <img src={match?.homeTeamCrest} alt={match?.homeTeam} className={classes.TeamLogo} />
+                        
+                            <div className={classes.TeamName} onClick={() => teamClickHandler(match?.homeTeamId)}>{match?.homeTeam}</div>
+                        </div>
+
+                        {/* Score & Stage */}
+                        <div className={classes.GameDetails}>
+                            <div className={classes.Score}>{match?.homeScore !== null && match?.homeScore !== undefined ? (match?.homeScore + "  -  " + match?.awayScore) : 'vs'}</div>
+                            <div className={classes.Stage}>{match?.stage ? replaceUnderscrore(match?.stage) : null}</div>
+                        </div>
+
+                        {/* Away Team */}
+                        <div className={classes.TeamContainer}>  
+                            <img src={match?.awayTeamCrest} alt={match?.awayTeam} className={classes.TeamLogo} />
+                        
+                            <div className={classes.TeamName} onClick={() => teamClickHandler(match?.awayTeamId)}>{match?.awayTeam}</div>
+                        </div>
+                    </div> 
+
+                    <hr></hr>
+
+                    <div className={classes.Competition}>
+                        <div>Referee: {match?.referee}</div>
+                        &nbsp; &nbsp; 
+                        <div>Stadium: {match?.stadium}</div>
+                    </div>   
+                </div>
+                }
+            </div>
+        </Fragment>
     )
 }
 

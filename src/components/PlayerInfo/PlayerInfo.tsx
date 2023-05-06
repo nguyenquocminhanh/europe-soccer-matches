@@ -4,11 +4,13 @@ import { replaceDash } from "../../utils/replace/replace/replace-";
 import { convertTime } from "../../utils/convertTime";
 import { Player } from "../../pages/Player/Player";
 import { Match } from "../../pages/Home/Home";
+import Spinner from "../../ui/Spinner";
 
 interface PlayerInfoProps {
     playerInfo: Player | null;
     matches: Match[];
     matchClickHandler: (matchId: number) => void;
+    isLoading: boolean
 }
 
 const PlayerInfo: React.FC<PlayerInfoProps> = props => {
@@ -24,6 +26,8 @@ const PlayerInfo: React.FC<PlayerInfoProps> = props => {
 
     return (
         <div className={classes.TeamInfoContainer}>
+            { props.isLoading ? <Spinner/> :
+            <>
             <div className={classes.InfoContainer}>
                 {/* Logo */}
                 <img src={props.playerInfo?.teamCrest} alt={props.playerInfo?.teamName} className={classes.Logo}/>
@@ -78,6 +82,8 @@ const PlayerInfo: React.FC<PlayerInfoProps> = props => {
                     </tbody>
                 </table>
             </div>
+            </>
+            }
         </div>
     )
 }

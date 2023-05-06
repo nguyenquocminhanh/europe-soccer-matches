@@ -3,6 +3,8 @@
   margin-top: 70px;
   position: relative;
   padding-top: 30px;
+  display: flex;
+  justify-content: center;
 }
 
 .Table {

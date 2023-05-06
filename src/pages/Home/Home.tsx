@@ -25,13 +25,15 @@ const Home: React.FC = () => {
   const [matches, setMatches] = useState<Match[]>([]);
   const [isButtonHidden, setButtonHidden] = useState<boolean>(true);
   const [leagueCode, setLeagueCode] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    onSelectLeagueHandler('PL', false)
+    onSelectLeagueHandler('PL', false);
   }, [])
 
   const onSelectLeagueHandler = (leagueCode: string | null, showAllMatch: boolean) => {
+    setIsLoading(true);
     // clear Match
     setMatches([]);
     setButtonHidden(true);
@@ -58,9 +60,11 @@ const Home: React.FC = () => {
         }
         setMatches(prevMatches => [...prevMatches, match]);
       })
+      setIsLoading(false);
       setButtonHidden(showAllMatch ? true: false);
     })
     .catch(err => {
+      setIsLoading(false)
       console.log(err);
     })
   }
@@ -76,7 +80,8 @@ const Home: React.FC = () => {
         <ScoreTable matches={matches}
             isButtonHidden={isButtonHidden} 
             arrowClickHandler={() => onSelectLeagueHandler(leagueCode, true)}
-            matchClickHandler={onMatchClickHandler}/>
+            matchClickHandler={onMatchClickHandler}
+            isLoading={isLoading}/>
     </Fragment>
   )
 }

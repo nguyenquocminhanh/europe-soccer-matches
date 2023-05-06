@@ -3,9 +3,11 @@ import classes from './Competition.module.css';
 import { Competition } from "../../pages/Competition/Competition";
 import { convertTime } from "../../utils/convertTime";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../ui/Spinner";
 
 interface CompetitionInfoProps {
     competitioninfo: Competition | null;
+    isLoading: boolean
 }
 
 const CompetitionInfo: React.FC<CompetitionInfoProps> = props => {
@@ -24,6 +26,8 @@ const CompetitionInfo: React.FC<CompetitionInfoProps> = props => {
 
     return (
         <div className={classes.TeamInfoContainer}>
+            {props.isLoading ? <Spinner/> :
+            <>
             <div className={classes.InfoContainer}>
                 {/* Logo */}
                 <img src={props.competitioninfo?.emblem} alt={props.competitioninfo?.name} className={classes.Logo}/>
@@ -54,6 +58,8 @@ const CompetitionInfo: React.FC<CompetitionInfoProps> = props => {
                     </tbody>
                 </table>
             </div>
+            </>
+            }
         </div>
     )
 }

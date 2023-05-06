@@ -27,10 +27,12 @@ const Competition: React.FC = props => {
     const [competitionInfo, setCompetitionInfo] = useState<Competition>();
     const [competitionMatches, setCompetitionMatches] = useState<Match[]>([]);
     const [selectedMenuItem, setMenu] = useState<'Competition Information' | 'Competition Matches'>('Competition Information');
+    const [isLoading, setIsloading] = useState<boolean>(false);
     const navigate = useNavigate();
 
         
     useEffect(() => {   
+        setIsloading(true);
         // get Competition Info
         axios.get(`${process.env.REACT_APP_SERVER_URL}/one-competition?competitionId=${competitionId}`)
         .then(response => {
@@ -69,14 +71,17 @@ const Competition: React.FC = props => {
                         winner: item.score.winner
                     }
                     setCompetitionMatches(prevMatches => [...prevMatches, match]);
+                    setIsloading(false);
                 })
             })
             .catch(err => {
                 console.log(err);
+                setIsloading(false);
             })
         })
         .catch(error => {
             console.log(error);
+            setIsloading(false);
         });
     }, [competitionId])
 
@@ -103,9 +108,10 @@ const Competition: React.FC = props => {
 
 
             {/* Competition Info */}
-            {selectedMenuItem === "Competition Information" && competitionInfo ? 
+            {selectedMenuItem === "Competition Information" ? 
             <CompetitionInfo 
-                competitioninfo={competitionInfo}/>
+                isLoading={isLoading}
+                competitioninfo={competitionInfo!}/>
             : null}
 
             {/* Competition Matches */}

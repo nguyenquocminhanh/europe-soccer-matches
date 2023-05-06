@@ -4,12 +4,14 @@ import classes from './ScoreTable.module.css'
 import { convertTime } from "../../utils/convertTime";
 import { replaceUnderscrore } from "../../utils/replace_";
 import ArrowUp from "../ArrowUp/ArrowUp";
+import Spinner from "../../ui/Spinner";
 
 interface ScoreTableProps {
     matches: Match[],
     isButtonHidden: boolean,
     arrowClickHandler: () => void;
     matchClickHandler: (matchId: number) => void;
+    isLoading: boolean,
 }
 
 const ScoreTable: React.FC<ScoreTableProps> = props => {
@@ -50,25 +52,29 @@ const ScoreTable: React.FC<ScoreTableProps> = props => {
         </tr>
     })
     return (<div className={classes.TableContainer}>
-        {!props.isButtonHidden ? <ArrowUp onClickHandler={props.arrowClickHandler}/> : null}
-        <table className={classes.Table}>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                    <th>Stage</th>
-                    <th>Home Team</th>
-                    <th></th>
-                    <th>Away Team</th>
-                    <th>Score</th>
-                </tr>
-            </thead>
+        {props.isLoading ? <Spinner/> :
+        <>
+            {!props.isButtonHidden ? <ArrowUp onClickHandler={props.arrowClickHandler}/> : null}
+            <table className={classes.Table}>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Stage</th>
+                        <th>Home Team</th>
+                        <th></th>
+                        <th>Away Team</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                {data}
-            </tbody>
-        </table>
+                <tbody>
+                    {data}
+                </tbody>
+            </table>
+        </>
+        }
     </div>
     )
 }
