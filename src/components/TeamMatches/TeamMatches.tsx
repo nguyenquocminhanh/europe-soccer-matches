@@ -18,10 +18,6 @@ const TeamMatches: React.FC<TeamMatchesProps> = props => {
             <td>{convertTime(match.date).date}</td>
             {/* Time */}
             <td>{convertTime(match.date).time}</td>
-            {/* Badge Status */}
-            <td><span className={classes.Badge} style={{backgroundColor: match.status === 'TIMED' || match.status === 'SCHEDULED' ? "#007bff" : (match.status ===  "IN_PLAY"? "#A0DB8E" : "#794044") }}>{match.status}</span></td>
-            {/* Competition */}
-            <td>{match.competition === "Primera Division" ? "LaLiga" : match.competition}</td>
             {/* Home Team */}
             <td>
                 <div className={classes.TableDataTeam}>
@@ -46,6 +42,10 @@ const TeamMatches: React.FC<TeamMatchesProps> = props => {
             </td>
             {/* Score */}
             <td>{match.homeScore !== null ? match.homeScore : '-'}:{match.awayScore !== null ? match.awayScore : '-'}</td>
+            {/* Badge Status */}
+            <td><span className={classes.Badge} style={{backgroundColor: match.status === 'TIMED' || match.status === 'SCHEDULED' ? "#007bff" : (match.status ===  "IN_PLAY"? "#A0DB8E" : "#794044") }}>{match.status}</span></td>
+            {/* Competition */}
+            <td>{match.competition === "Primera Division" ? "LaLiga" : match.competition}</td>
         </tr>
     })
     return (<div className={classes.TeamMatchesContainer}>
@@ -77,12 +77,12 @@ const TeamMatches: React.FC<TeamMatchesProps> = props => {
                     <tr>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Status</th>
-                        <th>Competition</th>
                         <th>Home Team</th>
                         <th></th>
                         <th>Away Team</th>
                         <th>Score</th>
+                        <th>Status</th>
+                        <th>Competition</th>
                     </tr>
                 </thead>
 

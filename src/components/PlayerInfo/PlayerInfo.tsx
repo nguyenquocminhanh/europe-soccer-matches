@@ -17,10 +17,25 @@ const PlayerInfo: React.FC<PlayerInfoProps> = props => {
     const matchessData =  props.matches ? props.matches.map((match) => (
         <tr key={match.id} onClick={() => props.matchClickHandler(match.id)}>
             <td>{convertTime(match.date).date}</td>
-            <td>{match.competition}</td>
-            <td>{match.homeTeam}</td>
-            <td>{match.awayTeam}</td>
+            <td>
+                <div className={classes.TableDataTeam}>
+                    <img src={match.homeTeamCrest} alt={match.homeTeam}/>
+                    <span style={{color: match.winner === 'AWAY_TEAM' ? '#70757a' : '#333'}}>{match.homeTeam !== null ? match.homeTeam : 'TBD'}</span>
+                    {match.winner === 'HOME_TEAM' ? <div className={classes.RedArrow}></div> : null}
+                </div>
+            </td>
+            <td>
+                <div className={classes.TableDataTeam}>
+                    <img src={match.awayTeamCrest} alt={match.awayTeam}/>
+                    <span style={{color: match.winner === 'HOME_TEAM' ? '#70757a' : '#333'}}>
+                        {match.awayTeam !== null ? match.awayTeam : 'TBD'}
+                        {/* Small arrow */}
+                    </span>
+                    {match.winner === 'AWAY_TEAM' ? <div className={classes.RedArrow}></div> : null}
+                </div>
+            </td>
             <td>{match.homeScore}:{match.awayScore}</td>
+            <td>{match.competition}</td>
         </tr>
     )) : null;
 
@@ -70,10 +85,10 @@ const PlayerInfo: React.FC<PlayerInfoProps> = props => {
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>Competition</th>
                             <th>Home Team</th>
                             <th>Away Team</th>
                             <th>Score</th>
+                            <th>Competition</th>
                         </tr>
                     </thead>
 
